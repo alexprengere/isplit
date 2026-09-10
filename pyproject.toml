@@ -1,0 +1,95 @@
+[build-system]
+requires = ["maturin>=1.8,<2"]
+build-backend = "maturin"
+
+[project]
+name = "isplit-rs"
+version = "0.1.0"
+description = "Iterative string splitting helpers for Python"
+readme = "README.md"
+authors = [
+  {name = "Alex Prengère", email = "alexprengere@users.noreply.github.com" }
+]
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.9"
+dependencies = []
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Typing :: Typed",
+]
+
+[project.urls]
+Homepage = "https://github.com/alexprengere/isplit"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "tox>=4.0",
+]
+
+[tool.maturin]
+module-name = "isplit._rust"
+python-source = "src"
+
+[tool.tox]
+requires = ["tox>=4.0"]
+env_list = [
+  "py39",
+  "py310",
+  "py311",
+  "py312",
+  "py313",
+  "py314",
+  "py315",
+  "pypy3",
+]
+
+[tool.tox.env_run_base]
+deps = ["pytest>=8.0"]
+commands = [["pytest", "tests"]]
+
+[tool.ruff.lint]
+select = [
+    "F",  # pyflakes
+    "E",  # pycodestyle
+    "W",  # pycodestyle
+    "UP",  # pyupgrade
+    "YTT",  # flake8-2020
+    "FAST",  # FastAPI
+    "ASYNC",  # flake8-async
+    "B",  # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "T10",  # flake8-debugger
+    "DJ",  # flake8-django
+    "FA",  # flake8-future-annotations
+    "ISC",  # flake8-implicit-str-concat
+    "ICN",  # flake8-import-conventions
+    "G",  # flake8-logging-format
+    "PIE",  # flake8-pie
+    "PYI",  # flake8-pyi
+    "RSE",  # flake8-raise
+    "SLOT",  # flake8-slots
+    "TD",  # flake8-todos
+    "TC",  # flake8-type-checking
+    "INT",  # flake8-gettext
+    "PD",  # pandas-vet
+    "PGH",  # pygrep-hooks
+    "FLY",  # flynt
+    "NPY",  # NumPy-specific rules
+    "AIR",  # Airflow
+    "RUF",  # Ruff-specific rules
+]
+ignore = [
+    "non-empty-init-module",
+]
+preview = true
+
+[tool.black]
+line-length = 88
+target-version = ["py39"]

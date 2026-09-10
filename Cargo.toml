@@ -1,0 +1,15 @@
+[package]
+name = "isplit"
+version = "0.1.0"
+edition = "2021"
+description = "Iterative string splitting helpers for Python"
+license = "MIT"
+homepage = "https://github.com/alexprengere/isplit"
+repository = "https://github.com/alexprengere/isplit"
+
+[lib]
+name = "_rust"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = { version = "0.23", features = ["abi3-py39", "extension-module"] }
