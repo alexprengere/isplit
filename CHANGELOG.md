@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.0] - 2026-09-15
+
+- README guidance for verifying Rust acceleration.
+- PyPI project links for the repository and changelog.
+
 ## [0.1.0] - 2026-09-15
 
 Initial PyPI release.
