@@ -29,6 +29,23 @@ python -m pip install isplit-rs
 The PyPI distribution is named `isplit-rs`, while the Python package is imported
 as `isplit`.
 
+## Verify Rust acceleration
+
+Installed wheels include the native Rust extension. To check that your
+environment is using it:
+
+```shell
+python - <<'PY'
+import isplit._rust as rust
+
+print(rust.__file__)
+print(list(rust.isplit("A+B+C", "+")))
+PY
+```
+
+The printed path should point to a compiled extension such as
+`isplit/_rust.abi3.so` on Linux/macOS or `isplit/_rust.pyd` on Windows.
+
 ## Quick start
 
 ```python
