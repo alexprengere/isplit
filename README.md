@@ -63,6 +63,37 @@ for token in isplit("AAA,BBB,CCC", ","):
 | Pure-Python fallback | Keep imports working even without the extension |
 | Typed package | Ship a `py.typed` marker for type checkers |
 
+## Performance
+
+`isplit` is designed for lazy, partial consumption. When you need every piece
+as a list, CPython's built-in `str.split` is usually the best choice. When you
+only need the first few pieces from a larger string, `isplit` can stop before
+splitting the rest of the input.
+
+One local CPython 3.12 / macOS arm64 run, extracting only the first field with
+the first separator at index 8:
+
+| Input size | `split(",")[0]` | `split(",", 1)[0]` | `partition(",")[0]` | `next(isplit(...))` |
+| ---: | ---: | ---: | ---: | ---: |
+| ~1 MB | 1774.0 us | 14.6 us | 16.2 us | 0.3 us |
+| ~100 KB | 140.7 us | 1.9 us | 2.0 us | 0.3 us |
+| ~10 KB | 13.4 us | 0.8 us | 0.6 us | 0.3 us |
+| ~1 KB | 1.8 us | 0.4 us | 0.3 us | 0.3 us |
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/alexprengere/isplit/main/docs/performance.svg" alt="Performance chart comparing partial str.split and isplit" width="760">
+</p>
+
+In other words, `isplit` helps most when it avoids unnecessary work. For small
+strings, the difference is tiny; for larger strings, avoiding a full split can
+matter.
+
+Run the benchmark locally:
+
+```shell
+uv run python scripts/benchmark_split.py
+```
+
 ## API
 
 ```python

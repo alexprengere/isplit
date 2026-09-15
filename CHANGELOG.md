@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.0] - 2026-09-15
+
+- Optimized the Rust string iterators to avoid copying the full input string by
+  using CPython Unicode C-API operations for find/substr work.
+- README performance section with microsecond timings and a chart for partial
+  first-field splitting across ~100 B, ~1 KB, ~10 KB, ~100 KB, and ~1 MB inputs.
+- README guidance for verifying that the installed wheel is using the native
+  Rust extension.
+
 ## [0.2.0] - 2026-09-15
 
 - README guidance for verifying Rust acceleration.
