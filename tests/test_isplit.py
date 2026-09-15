@@ -67,3 +67,5 @@ def test_unicode_input_and_separator() -> None:
 def test_empty_separator_is_invalid() -> None:
     with pytest.raises(ValueError, match="empty separator"):
         list(isplit("A+B", ""))
+    with pytest.raises(ValueError, match="empty separator"):
+        list(irsplit("A+B", ""))
