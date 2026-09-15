@@ -1,3 +1,5 @@
+import sys
+
 import pytest
 
 import isplit as isplit_module
@@ -73,6 +75,9 @@ def test_empty_separator_is_invalid() -> None:
 
 
 def test_public_api_uses_rust_directly_when_available() -> None:
+    if sys.implementation.name == "pypy":
+        pytest.skip("PyPy uses the Python fallback")
+
     rust = pytest.importorskip("isplit._rust")
 
     assert isplit_module.isplit is rust.isplit

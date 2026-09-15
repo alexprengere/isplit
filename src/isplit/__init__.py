@@ -1,7 +1,7 @@
 """Iterative string splitting helpers."""
 
+import sys
 from collections.abc import Callable, Iterator
-from importlib.util import find_spec
 
 __all__ = ["irsplit", "isplit"]
 
@@ -62,11 +62,15 @@ def _py_irsplit(s: str, sep: str) -> Iterator[str]:
         end = index
 
 
-if find_spec(f"{__name__}._rust") is None:
+if sys.implementation.name == "pypy":
     isplit: Callable[[str, str], Iterator[str]] = _py_isplit
     irsplit: Callable[[str, str], Iterator[str]] = _py_irsplit
 else:
-    from . import _rust  # ty: ignore[unresolved-import]
-
-    isplit: Callable[[str, str], Iterator[str]] = _rust.isplit
-    irsplit: Callable[[str, str], Iterator[str]] = _rust.irsplit
+    try:
+        from . import _rust  # ty: ignore[unresolved-import]
+    except ImportError:
+        isplit: Callable[[str, str], Iterator[str]] = _py_isplit
+        irsplit: Callable[[str, str], Iterator[str]] = _py_irsplit
+    else:
+        isplit: Callable[[str, str], Iterator[str]] = _rust.isplit
+        irsplit: Callable[[str, str], Iterator[str]] = _rust.irsplit

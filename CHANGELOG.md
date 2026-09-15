@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 - Optimized the Rust string iterators to avoid copying the full input string by
   using CPython Unicode C-API operations for find/substr work.
+- Bound the public API directly to the Rust extension on CPython, while using
+  the Python fallback on PyPy.
 - README performance section with microsecond timings and a chart for partial
   first-field splitting across ~100 B, ~1 KB, ~10 KB, ~100 KB, and ~1 MB inputs.
 - README guidance for verifying that the installed wheel is using the native
