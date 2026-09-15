@@ -20,12 +20,13 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: Implementation :: CPython",
-    "Programming Language :: Python :: Implementation :: PyPy",
     "Typing :: Typed",
 ]
 
 [project.urls]
+Changelog = "https://github.com/alexprengere/isplit/blob/main/CHANGELOG.md"
 Homepage = "https://github.com/alexprengere/isplit"
+Repository = "https://github.com/alexprengere/isplit"
 
 [dependency-groups]
 dev = [
