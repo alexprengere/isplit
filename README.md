@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/logo.svg" alt="isplit logo" width="520">
+  <img src="https://raw.githubusercontent.com/alexprengere/isplit/main/docs/logo.svg" alt="isplit logo" width="520">
 </p>
 
 <p align="center">
