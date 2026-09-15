@@ -1,34 +1,25 @@
 """Iterative string splitting helpers."""
 
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
 from importlib.util import find_spec
 
 __all__ = ["irsplit", "isplit"]
 
-if find_spec(f"{__name__}._rust") is None:
-    _rust = None
-else:
-    from . import _rust  # ty: ignore[unresolved-import]
 
-
-def isplit(s: str, sep: str) -> Iterator[str]:
+def _py_isplit(s: str, sep: str) -> Iterator[str]:
     """Lazy version of ``s.split(sep)``.
 
-    >>> list(isplit("", ","))
+    >>> list(_py_isplit("", ","))
     ['']
-    >>> list(isplit("AAA", ","))
+    >>> list(_py_isplit("AAA", ","))
     ['AAA']
-    >>> list(isplit("AAA,", ","))
+    >>> list(_py_isplit("AAA,", ","))
     ['AAA', '']
-    >>> list(isplit("AAA,BBB", ","))
+    >>> list(_py_isplit("AAA,BBB", ","))
     ['AAA', 'BBB']
-    >>> list(isplit("AAA,,BBB", ",,"))
+    >>> list(_py_isplit("AAA,,BBB", ",,"))
     ['AAA', 'BBB']
     """
-    if _rust is not None:
-        yield from _rust.isplit(s, sep)
-        return
-
     seplen = len(sep)
     if seplen == 0:
         raise ValueError("empty separator")
@@ -43,24 +34,20 @@ def isplit(s: str, sep: str) -> Iterator[str]:
         start = index + seplen
 
 
-def irsplit(s: str, sep: str) -> Iterator[str]:
+def _py_irsplit(s: str, sep: str) -> Iterator[str]:
     """Lazy version of ``s.rsplit(sep)``.
 
-    >>> list(irsplit("", ","))
+    >>> list(_py_irsplit("", ","))
     ['']
-    >>> list(irsplit("AAA", ","))
+    >>> list(_py_irsplit("AAA", ","))
     ['AAA']
-    >>> list(irsplit("AAA,", ","))
+    >>> list(_py_irsplit("AAA,", ","))
     ['', 'AAA']
-    >>> list(irsplit("AAA,BBB", ","))
+    >>> list(_py_irsplit("AAA,BBB", ","))
     ['BBB', 'AAA']
-    >>> list(irsplit("AAA,,BBB", ",,"))
+    >>> list(_py_irsplit("AAA,,BBB", ",,"))
     ['BBB', 'AAA']
     """
-    if _rust is not None:
-        yield from _rust.irsplit(s, sep)
-        return
-
     seplen = len(sep)
     if seplen == 0:
         raise ValueError("empty separator")
@@ -73,3 +60,13 @@ def irsplit(s: str, sep: str) -> Iterator[str]:
             return
         yield s[index + seplen : end]
         end = index
+
+
+if find_spec(f"{__name__}._rust") is None:
+    isplit: Callable[[str, str], Iterator[str]] = _py_isplit
+    irsplit: Callable[[str, str], Iterator[str]] = _py_irsplit
+else:
+    from . import _rust  # ty: ignore[unresolved-import]
+
+    isplit: Callable[[str, str], Iterator[str]] = _rust.isplit
+    irsplit: Callable[[str, str], Iterator[str]] = _rust.irsplit

@@ -1,5 +1,6 @@
 import pytest
 
+import isplit as isplit_module
 from isplit import irsplit, isplit
 
 
@@ -69,3 +70,10 @@ def test_empty_separator_is_invalid() -> None:
         list(isplit("A+B", ""))
     with pytest.raises(ValueError, match="empty separator"):
         list(irsplit("A+B", ""))
+
+
+def test_public_api_uses_rust_directly_when_available() -> None:
+    rust = pytest.importorskip("isplit._rust")
+
+    assert isplit_module.isplit is rust.isplit
+    assert isplit_module.irsplit is rust.irsplit
