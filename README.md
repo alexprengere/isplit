@@ -3,12 +3,11 @@
 </p>
 
 <p align="center">
-  <strong>Lazy, typed string splitting helpers for Python, backed by Rust.</strong>
+  <strong>Lazy string splitting for Python, backed by Rust.</strong>
 </p>
 
 <p align="center">
   <a href="https://pypi.org/project/isplit-rs/"><img src="https://img.shields.io/pypi/v/isplit-rs.svg" alt="PyPI"></a>
-  <a href="https://pypi.org/project/isplit-rs/"><img src="https://img.shields.io/pypi/pyversions/isplit-rs.svg" alt="Python versions"></a>
   <a href="https://github.com/alexprengere/isplit/actions/workflows/python-package.yml"><img src="https://github.com/alexprengere/isplit/actions/workflows/python-package.yml/badge.svg" alt="CI"></a>
   <a href="https://github.com/alexprengere/isplit/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License"></a>
 </p>
@@ -23,11 +22,10 @@ available, with the original pure-Python implementation kept as a fallback.
 ## Installation
 
 ```shell
-python -m pip install isplit-rs
+pip install isplit-rs
 ```
 
-The PyPI distribution is named `isplit-rs`, while the Python package is imported
-as `isplit`.
+> The PyPI distribution is named `isplit-rs`, while the Python package is imported as `isplit`.
 
 ## Quick start
 
@@ -51,6 +49,7 @@ from isplit import isplit
 
 for token in isplit("AAA,BBB,CCC", ","):
     print(token)
+    break
 ```
 
 ## Why `isplit`?
@@ -61,7 +60,6 @@ for token in isplit("AAA,BBB,CCC", ","):
 | Forward and reverse splits | Use `isplit` or `irsplit` depending on scan direction |
 | Rust acceleration | Use the PyO3 extension when available |
 | Pure-Python fallback | Keep imports working even without the extension |
-| Typed package | Ship a `py.typed` marker for type checkers |
 
 ## Performance
 
